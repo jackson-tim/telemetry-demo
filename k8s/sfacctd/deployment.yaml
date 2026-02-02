@@ -42,10 +42,11 @@ data:
     ! --- Kafka plugin ---
     plugins: kafka[sflow]
 
-    kafka_broker_host[sflow]: kafka-headless.telemetry.svc.cluster.local:9092
+    kafka_broker_host[sflow]: kafka-headless
+    kafka_broker_port[sflow]: 9092
     kafka_topic[sflow]: flow-telemetry-raw
     kafka_output[sflow]: json
-    kafka_refresh_time[sflow]: 60
+    kafka_refresh_time[sflow]: 10
 
     ! --- Sampling ---
     sfacctd_renormalize: true
@@ -56,6 +57,8 @@ data:
     ! --- Misc ---
     timestamps_secs: true
     writer_id_string: sfacctd-%H
+    debug: true
+    syslog: /dev/stderr
 
   pretag.map: |
     !
