@@ -213,6 +213,7 @@ def _bootstrap_and_watch_netbox(sr_client: SchemaRegistryClient) -> None:
     # on committed offsets for a cache that only lives in memory.
     cdc_conf = {
         "bootstrap.servers": KAFKA_BOOTSTRAP,
+        "group.id": f"{CONSUMER_GROUP}-cdc-ephemeral",  # required by librdkafka but unused
         "enable.auto.commit": False,
     }
     cdc_consumer = Consumer(cdc_conf)
