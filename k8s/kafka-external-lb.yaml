@@ -1,0 +1,24 @@
+##
+## Cilium LoadBalancer service to expose Kafka externally
+## IP: 10.42.201.20 (announced via BGP by Cilium)
+##
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-lb
+  namespace: telemetry
+  labels:
+    app: kafka
+  annotations:
+    io.cilium/lb-ipam-ips: "10.42.201.20"
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.42.201.20
+  ports:
+    - name: external
+      port: 9092
+      targetPort: 9094
+      protocol: TCP
+  selector:
+    app: kafka

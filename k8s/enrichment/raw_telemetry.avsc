@@ -1,0 +1,189 @@
+{
+  "type": "record",
+  "name": "InterfaceTelemetryEvent",
+  "namespace": "net.idge.telemetry.interface",
+  "doc": "Unified network interface telemetry event. Vendor-neutral schema covering counters, state, and collection metadata for any interface on any device in the fabric. This is the canonical contract for all downstream consumers (Flink, ClickHouse, alerting, etc.).",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": "long",
+      "doc": "Event timestamp in epoch milliseconds. For mock/gnmic this is collection time; for SNMP this is sysUpTime-derived.",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "device_name",
+      "type": "string",
+      "doc": "FQDN or short hostname of the network device (e.g. 'spine-01', 'leaf-17')."
+    },
+    {
+      "name": "device_role",
+      "type": {
+        "type": "enum",
+        "name": "DeviceRole",
+        "namespace": "net.idge.telemetry.interface",
+        "symbols": ["spine", "leaf", "border", "superspine", "dcgw", "unknown"],
+        "doc": "Role of the device within the Clos fabric topology."
+      },
+      "doc": "Fabric role — drives downstream aggregation groupings."
+    },
+    {
+      "name": "interface_name",
+      "type": "string",
+      "doc": "Normalized interface name with vendor prefix stripped and no unit suffix (e.g. 'et-0/0/0' not 'et-0/0/0.0', 'Ethernet1' not 'Ethernet1.0')."
+    },
+    {
+      "name": "interface_description",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Operator-assigned interface description. Null if not configured."
+    },
+    {
+      "name": "counters",
+      "type": {
+        "type": "record",
+        "name": "InterfaceCounters",
+        "namespace": "net.idge.telemetry.interface",
+        "doc": "64-bit monotonically increasing interface counters. All counters reset to 0 on device reboot or counter wrap.",
+        "fields": [
+          {
+            "name": "in_octets",
+            "type": "long",
+            "doc": "Total bytes received on the interface (SNMP ifHCInOctets equivalent)."
+          },
+          {
+            "name": "out_octets",
+            "type": "long",
+            "doc": "Total bytes transmitted on the interface (SNMP ifHCOutOctets equivalent)."
+          },
+          {
+            "name": "in_errors",
+            "type": "long",
+            "doc": "Total inbound packets with errors (CRC, runt, giant, etc.)."
+          },
+          {
+            "name": "out_errors",
+            "type": "long",
+            "doc": "Total outbound packets with errors."
+          },
+          {
+            "name": "in_discards",
+            "type": "long",
+            "doc": "Inbound packets discarded (queue full, policy drop, etc.)."
+          },
+          {
+            "name": "out_discards",
+            "type": "long",
+            "doc": "Outbound packets discarded."
+          },
+          {
+            "name": "in_unicast_pkts",
+            "type": "long",
+            "doc": "Total unicast packets received."
+          },
+          {
+            "name": "out_unicast_pkts",
+            "type": "long",
+            "doc": "Total unicast packets transmitted."
+          },
+          {
+            "name": "in_crc_errors",
+            "type": ["null", "long"],
+            "default": null,
+            "doc": "CRC errors on ingress. Null when vendor/platform does not expose this counter (e.g. some Arista EOS versions)."
+          },
+          {
+            "name": "in_fcs_errors",
+            "type": ["null", "long"],
+            "default": null,
+            "doc": "Frame Check Sequence errors on ingress. Null when not supported by platform."
+          }
+        ]
+      },
+      "doc": "Interface traffic and error counters."
+    },
+    {
+      "name": "state",
+      "type": {
+        "type": "record",
+        "name": "InterfaceState",
+        "namespace": "net.idge.telemetry.interface",
+        "doc": "Current operational and administrative state of the interface.",
+        "fields": [
+          {
+            "name": "admin_status",
+            "type": {
+              "type": "enum",
+              "name": "AdminStatus",
+              "namespace": "net.idge.telemetry.interface",
+              "symbols": ["UP", "DOWN"],
+              "doc": "Administrative status as configured by operator."
+            },
+            "doc": "Admin status — UP means the interface is enabled."
+          },
+          {
+            "name": "oper_status",
+            "type": {
+              "type": "enum",
+              "name": "OperStatus",
+              "namespace": "net.idge.telemetry.interface",
+              "symbols": ["UP", "DOWN"],
+              "doc": "Operational status reflecting link/protocol state."
+            },
+            "doc": "Oper status — UP means the link is established and forwarding."
+          },
+          {
+            "name": "speed",
+            "type": "long",
+            "doc": "Interface speed in Mbps (e.g. 100000 for 100G, 400000 for 400G). 0 if unknown or down."
+          },
+          {
+            "name": "mtu",
+            "type": "int",
+            "doc": "Maximum transmission unit in bytes. Typically 9216 for fabric links, 1514 for access."
+          }
+        ]
+      },
+      "doc": "Interface admin/oper state and physical properties."
+    },
+    {
+      "name": "metadata",
+      "type": {
+        "type": "record",
+        "name": "CollectionMetadata",
+        "namespace": "net.idge.telemetry.interface",
+        "doc": "Metadata about how and when this telemetry was collected.",
+        "fields": [
+          {
+            "name": "source",
+            "type": {
+              "type": "enum",
+              "name": "CollectionSource",
+              "namespace": "net.idge.telemetry.interface",
+              "symbols": ["gnmic", "snmp", "mock", "openconfig", "native"],
+              "doc": "Collection mechanism that produced this event."
+            },
+            "doc": "How the data was collected — critical for understanding data quality and latency characteristics."
+          },
+          {
+            "name": "vendor",
+            "type": {
+              "type": "enum",
+              "name": "Vendor",
+              "namespace": "net.idge.telemetry.interface",
+              "symbols": ["juniper", "arista", "nokia", "cisco", "sonic", "cumulus", "mock", "unknown"],
+              "doc": "Network device vendor."
+            },
+            "doc": "Device vendor — affects which optional counters are populated and naming conventions."
+          },
+          {
+            "name": "collection_timestamp",
+            "type": "long",
+            "doc": "When the collector (gnmic/snmp/mock) actually gathered this data, in epoch milliseconds. May differ from event timestamp due to transport delay.",
+            "logicalType": "timestamp-millis"
+          }
+        ]
+      },
+      "doc": "Collection metadata for provenance tracking."
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+# Kubernetes deployment for gNMIc in the telemetry namespace
+# This is the production approach — run gnmic inside k8s alongside Kafka
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gnmic
+  namespace: telemetry
+  labels:
+    app: gnmic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gnmic
+  template:
+    metadata:
+      labels:
+        app: gnmic
+    spec:
+      containers:
+        - name: gnmic
+          image: ghcr.io/openconfig/gnmic:latest
+          args:
+            - subscribe
+            - --config
+            - /etc/gnmic/gnmic.yml
+          volumeMounts:
+            - name: config
+              mountPath: /etc/gnmic
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+      volumes:
+        - name: config
+          configMap:
+            name: gnmic-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gnmic-config
+  namespace: telemetry
+data:
+  gnmic.yml: |
+    # gNMIc config for k8s deployment
+    # Targets will be dynamically configured when real network devices are available
+    targets:
+      # Example production targets:
+      # spine1:
+      #   address: 10.42.x.x:57400
+      #   username: gnmi-collector
+      #   password: "${GNMI_PASSWORD}"
+      #   skip-verify: true
+
+    subscriptions:
+      interface_stats:
+        paths:
+          - /interface[name=*]/statistics
+          - /interface[name=*]/traffic-rate
+        stream-mode: sample
+        sample-interval: 10s
+        encoding: json_ietf
+
+      interface_state:
+        paths:
+          - /interface[name=*]/oper-state
+          - /interface[name=*]/admin-state
+          - /interface[name=*]/ifindex
+        stream-mode: on-change
+        encoding: json_ietf
+
+    outputs:
+      kafka-raw:
+        type: kafka
+        address: kafka.telemetry.svc.cluster.local:9092
+        topic: gnmi-telemetry-raw
+        format: event
+        insert-key: true
+        split-events: true
+        compression-codec: gzip
+        add-target: if-not-present
+        event-processors:
+          - add-ifindex-tag
+
+    processors:
+      add-ifindex-tag:
+        event-to-tag:
+          value-names:
+            - ".*ifindex$"
+
+    encoding: json_ietf
+    log: true

@@ -1,0 +1,24 @@
+##
+## Cilium LoadBalancer service to expose Schema Registry externally
+## IP: 10.42.201.21 (announced via BGP by Cilium)
+##
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: schema-registry-lb
+  namespace: telemetry
+  labels:
+    app: schema-registry
+  annotations:
+    io.cilium/lb-ipam-ips: "10.42.201.21"
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.42.201.21
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+      protocol: TCP
+  selector:
+    app: schema-registry

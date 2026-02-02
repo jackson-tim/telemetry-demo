@@ -1,0 +1,122 @@
+# gNMIc configuration for streaming telemetry → Kafka pipeline
+# For use with our k8s Kafka 4.1.1 cluster and SR Linux targets
+#
+# Usage:
+#   gnmic --config gnmic-kafka.yml subscribe
+#
+# Kafka access: SSH tunnel needed from Mac mini:
+#   ssh -L 9092:10.43.236.67:9092 -L 8081:10.43.154.3:8081 k8s-lb -N
+# Or deploy gnmic as a container in the k8s telemetry namespace
+
+# gNMI targets
+targets:
+  # Local SR Linux test target (Docker container on Mac mini)
+  srlinux-local:
+    address: localhost:57400
+    username: admin
+    password: NokiaSrl1!
+    skip-verify: true
+    # For production, add proper TLS certs
+
+  # Example: production targets would look like:
+  # spine1.dc1:
+  #   address: 10.42.x.x:57400
+  #   username: gnmi-collector
+  #   password: "${GNMI_PASSWORD}"
+  #   tls:
+  #     ca-file: /etc/gnmic/certs/ca.pem
+  #     skip-verify: false
+
+# Subscriptions
+subscriptions:
+  # Interface statistics - sampled every 10s
+  interface_stats:
+    paths:
+      - /interface[name=*]/statistics
+      - /interface[name=*]/ethernet/statistics
+    stream-mode: sample
+    sample-interval: 10s
+    encoding: json_ietf
+
+  # Interface operational state - on-change (link up/down events)
+  interface_state:
+    paths:
+      - /interface[name=*]/oper-state
+      - /interface[name=*]/admin-state
+      - /interface[name=*]/ifindex
+      - /interface[name=*]/mtu
+      - /interface[name=*]/last-change
+      - /interface[name=*]/ethernet/port-speed
+    stream-mode: on-change
+    encoding: json_ietf
+
+  # System information - polled every 60s
+  system_info:
+    paths:
+      - /system/name/host-name
+    mode: stream
+    stream-mode: sample
+    sample-interval: 60s
+    encoding: json_ietf
+
+# Outputs
+outputs:
+  # Primary output: Kafka for the telemetry pipeline
+  kafka-telemetry:
+    type: kafka
+    # External Kafka via Cilium LB
+    address: 10.42.201.20:9092
+    topic: gnmi-telemetry-raw
+    # Use topic-prefix for per-subscription topics:
+    # topic-prefix: gnmi
+    # This creates topics like: gnmi_interface_stats_srlinux-local
+    format: event
+    # insert-key ensures ordering per source+subscription (important for stateful processing)
+    insert-key: true
+    # Use gzip for bandwidth efficiency on RPi cluster
+    compression-codec: gzip
+    num-workers: 1
+    max-retry: 3
+    timeout: 10s
+    recovery-wait-time: 10s
+    # Split events so each metric is a separate JSON object (easier downstream processing)
+    split-events: true
+    # Override target name to use the configured target name
+    add-target: if-not-present
+    # Event processors to clean up and enrich data before sending to Kafka
+    event-processors:
+      - trim-prefixes
+      - add-ifindex-tag
+
+  # Secondary output: file for debugging
+  debug-file:
+    type: file
+    file-type: stdout
+    format: event
+    event-processors:
+      - trim-prefixes
+
+# Event processors
+processors:
+  # Clean up metric path prefixes for cleaner downstream processing
+  trim-prefixes:
+    event-strings:
+      value-names:
+        - "^/srl_nokia-interfaces:"
+      old: "srl_nokia-interfaces:"
+      new: ""
+
+  # Extract ifindex as a tag for easier correlation with SNMP data
+  add-ifindex-tag:
+    event-to-tag:
+      value-names:
+        - ".*ifindex$"
+
+# Global settings
+username: admin
+password: NokiaSrl1!
+insecure: false
+skip-verify: true
+encoding: json_ietf
+log: true
+debug: false

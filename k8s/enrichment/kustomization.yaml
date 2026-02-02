@@ -1,0 +1,7 @@
+apiVersion: kustomize.build/v1beta1
+kind: Kustomization
+
+namespace: telemetry
+
+resources:
+  - enrichment.yaml

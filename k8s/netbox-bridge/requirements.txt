@@ -1,0 +1,4 @@
+flask==3.1.0
+gunicorn==23.0.0
+pynetbox==7.4.1
+confluent-kafka[avro]==2.6.1

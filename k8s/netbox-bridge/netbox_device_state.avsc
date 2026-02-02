@@ -1,0 +1,57 @@
+{
+  "type": "record",
+  "name": "NetBoxDeviceState",
+  "namespace": "net.idge.telemetry.netbox",
+  "doc": "Materialized device + interface state from NetBox. Keyed by device_name in the compacted netbox-changes topic. Each record is the full current state for one device — consumers can bootstrap their cache by reading from offset 0.",
+  "fields": [
+    {"name": "device_name",     "type": "string",          "doc": "Device hostname (compaction key)."},
+    {"name": "event_type",      "type": {"type": "enum", "name": "EventType", "symbols": ["snapshot", "created", "updated", "deleted"], "doc": "How this record was produced."}, "doc": "Whether this is a bulk snapshot, webhook create/update, or deletion tombstone."},
+    {"name": "event_timestamp", "type": "long",            "doc": "When this event was produced (epoch ms).", "logicalType": "timestamp-millis"},
+    {"name": "netbox_id",       "type": ["null", "int"],   "default": null, "doc": "NetBox device ID."},
+
+    {"name": "site_name",       "type": ["null", "string"], "default": null},
+    {"name": "site_slug",       "type": ["null", "string"], "default": null},
+    {"name": "region",          "type": ["null", "string"], "default": null},
+    {"name": "rack_name",       "type": ["null", "string"], "default": null},
+    {"name": "rack_position",   "type": ["null", "int"],    "default": null},
+    {"name": "rack_face",       "type": ["null", "string"], "default": null},
+
+    {"name": "device_role",     "type": ["null", "string"], "default": null, "doc": "NetBox device role name."},
+    {"name": "device_type",     "type": ["null", "string"], "default": null, "doc": "Device type model."},
+    {"name": "device_platform", "type": ["null", "string"], "default": null, "doc": "Platform / NOS."},
+    {"name": "device_serial",   "type": ["null", "string"], "default": null},
+    {"name": "device_status",   "type": ["null", "string"], "default": null, "doc": "active, planned, staged, etc."},
+    {"name": "device_tags",     "type": {"type": "array", "items": "string"}, "default": []},
+    {"name": "primary_ip",      "type": ["null", "string"], "default": null},
+    {"name": "tenant_name",     "type": ["null", "string"], "default": null},
+    {"name": "tenant_slug",     "type": ["null", "string"], "default": null},
+    {"name": "custom_fields",   "type": ["null", "string"], "default": null, "doc": "JSON-encoded custom fields."},
+
+    {
+      "name": "interfaces",
+      "type": {"type": "array", "items": {
+        "type": "record",
+        "name": "NetBoxInterfaceState",
+        "namespace": "net.idge.telemetry.netbox",
+        "doc": "Interface metadata from NetBox.",
+        "fields": [
+          {"name": "name",              "type": "string"},
+          {"name": "netbox_id",         "type": ["null", "int"],     "default": null},
+          {"name": "type",              "type": ["null", "string"],  "default": null},
+          {"name": "enabled",           "type": ["null", "boolean"], "default": null},
+          {"name": "mtu",               "type": ["null", "int"],     "default": null},
+          {"name": "mac_address",       "type": ["null", "string"],  "default": null},
+          {"name": "description",       "type": ["null", "string"],  "default": null},
+          {"name": "mode",              "type": ["null", "string"],  "default": null},
+          {"name": "tags",              "type": {"type": "array", "items": "string"}, "default": []},
+          {"name": "cable_peer_device",    "type": ["null", "string"], "default": null},
+          {"name": "cable_peer_interface", "type": ["null", "string"], "default": null},
+          {"name": "cable_status",         "type": ["null", "string"], "default": null},
+          {"name": "cable_type",           "type": ["null", "string"], "default": null}
+        ]
+      }},
+      "default": [],
+      "doc": "All interfaces for this device. Full snapshot on each emit — consumers replace their entire device cache entry."
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mock-telemetry-producer
+  namespace: telemetry
+  labels:
+    app.kubernetes.io/name: mock-telemetry-producer
+    app.kubernetes.io/component: producer
+    app.kubernetes.io/part-of: telemetry-pipeline
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate  # Only one producer instance — no need for rolling
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mock-telemetry-producer
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mock-telemetry-producer
+        app.kubernetes.io/component: producer
+        app.kubernetes.io/part-of: telemetry-pipeline
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      terminationGracePeriodSeconds: 45  # Allow flush on SIGTERM
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: producer
+          image: ghcr.io/beans-assist/telemetry-mock-producer:latest
+          imagePullPolicy: Always
+          env:
+            - name: KAFKA_BOOTSTRAP
+              value: "kafka.telemetry.svc.cluster.local:9092"
+            - name: SCHEMA_REGISTRY_URL
+              value: "http://schema-registry.telemetry.svc.cluster.local:8081"
+            - name: KAFKA_TOPIC
+              value: "interface-telemetry-raw"
+            - name: INTERVAL
+              value: "30"
+            - name: LOG_LEVEL
+              value: "INFO"
+            - name: ANOMALY_PROBABILITY
+              value: "0.02"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          livenessProbe:
+            exec:
+              command:
+                - python
+                - -c
+                - "import os, signal; os.kill(1, 0)"  # PID 1 alive check
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+      restartPolicy: Always

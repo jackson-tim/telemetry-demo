@@ -1,0 +1,121 @@
+{
+  "type": "record",
+  "name": "InterfaceTelemetryEnriched",
+  "namespace": "net.idge.telemetry.interface",
+  "doc": "Interface telemetry enriched with NetBox device/interface metadata. Extends InterfaceTelemetryEvent with site, rack, cable, and tenant context.",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": "long",
+      "doc": "Event timestamp in epoch milliseconds.",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "device_name",
+      "type": "string",
+      "doc": "FQDN or short hostname of the network device."
+    },
+    {
+      "name": "device_role",
+      "type": {
+        "type": "enum",
+        "name": "DeviceRole",
+        "namespace": "net.idge.telemetry.interface",
+        "symbols": ["spine", "leaf", "border", "superspine", "dcgw", "unknown"],
+        "doc": "Role of the device within the Clos fabric topology."
+      },
+      "doc": "Fabric role."
+    },
+    {
+      "name": "interface_name",
+      "type": "string",
+      "doc": "Normalized interface name."
+    },
+    {
+      "name": "interface_description",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Operator-assigned interface description."
+    },
+    {
+      "name": "counters",
+      "type": {
+        "type": "record",
+        "name": "InterfaceCounters",
+        "namespace": "net.idge.telemetry.interface",
+        "doc": "64-bit monotonically increasing interface counters.",
+        "fields": [
+          {"name": "in_octets",       "type": "long", "doc": "Total bytes received."},
+          {"name": "out_octets",      "type": "long", "doc": "Total bytes transmitted."},
+          {"name": "in_errors",       "type": "long", "doc": "Total inbound errors."},
+          {"name": "out_errors",      "type": "long", "doc": "Total outbound errors."},
+          {"name": "in_discards",     "type": "long", "doc": "Inbound discards."},
+          {"name": "out_discards",    "type": "long", "doc": "Outbound discards."},
+          {"name": "in_unicast_pkts", "type": "long", "doc": "Unicast packets received."},
+          {"name": "out_unicast_pkts","type": "long", "doc": "Unicast packets transmitted."},
+          {"name": "in_crc_errors",   "type": ["null", "long"], "default": null, "doc": "CRC errors on ingress."},
+          {"name": "in_fcs_errors",   "type": ["null", "long"], "default": null, "doc": "FCS errors on ingress."}
+        ]
+      },
+      "doc": "Interface traffic and error counters."
+    },
+    {
+      "name": "state",
+      "type": {
+        "type": "record",
+        "name": "InterfaceState",
+        "namespace": "net.idge.telemetry.interface",
+        "doc": "Current operational and administrative state.",
+        "fields": [
+          {"name": "admin_status", "type": {"type": "enum", "name": "AdminStatus", "namespace": "net.idge.telemetry.interface", "symbols": ["UP", "DOWN"]}, "doc": "Admin status."},
+          {"name": "oper_status",  "type": {"type": "enum", "name": "OperStatus",  "namespace": "net.idge.telemetry.interface", "symbols": ["UP", "DOWN"]}, "doc": "Oper status."},
+          {"name": "speed", "type": "long", "doc": "Speed in Mbps."},
+          {"name": "mtu",   "type": "int",  "doc": "MTU in bytes."}
+        ]
+      },
+      "doc": "Interface admin/oper state and physical properties."
+    },
+    {
+      "name": "metadata",
+      "type": {
+        "type": "record",
+        "name": "CollectionMetadata",
+        "namespace": "net.idge.telemetry.interface",
+        "doc": "How and when this telemetry was collected.",
+        "fields": [
+          {"name": "source", "type": {"type": "enum", "name": "CollectionSource", "namespace": "net.idge.telemetry.interface", "symbols": ["gnmic", "snmp", "mock", "openconfig", "native"]}, "doc": "Collection mechanism."},
+          {"name": "vendor", "type": {"type": "enum", "name": "Vendor", "namespace": "net.idge.telemetry.interface", "symbols": ["juniper", "arista", "nokia", "cisco", "sonic", "cumulus", "mock", "unknown"]}, "doc": "Device vendor."},
+          {"name": "collection_timestamp", "type": "long", "doc": "Collector gather time (epoch ms).", "logicalType": "timestamp-millis"}
+        ]
+      },
+      "doc": "Collection metadata."
+    },
+
+    {"name": "enrichment_ts",   "type": "long",   "doc": "Unix epoch ms when enrichment was applied."},
+    {"name": "enriched",        "type": "boolean", "doc": "True if NetBox enrichment succeeded."},
+
+    {"name": "site_name",       "type": ["null", "string"], "default": null, "doc": "NetBox site name."},
+    {"name": "site_slug",       "type": ["null", "string"], "default": null, "doc": "NetBox site slug."},
+    {"name": "region",          "type": ["null", "string"], "default": null, "doc": "NetBox region."},
+    {"name": "rack_name",       "type": ["null", "string"], "default": null, "doc": "Rack name."},
+    {"name": "rack_position",   "type": ["null", "int"],    "default": null, "doc": "U position in rack."},
+    {"name": "rack_face",       "type": ["null", "string"], "default": null, "doc": "Front or rear."},
+    {"name": "nb_device_role",  "type": ["null", "string"], "default": null, "doc": "NetBox device role name."},
+    {"name": "device_type",     "type": ["null", "string"], "default": null, "doc": "Device type model."},
+    {"name": "device_platform", "type": ["null", "string"], "default": null, "doc": "Platform / NOS."},
+    {"name": "device_serial",   "type": ["null", "string"], "default": null, "doc": "Serial number."},
+    {"name": "device_tags",     "type": {"type": "array", "items": "string"}, "default": [], "doc": "Device tags."},
+    {"name": "primary_ip",      "type": ["null", "string"], "default": null, "doc": "Primary management IP."},
+    {"name": "tenant_name",     "type": ["null", "string"], "default": null, "doc": "Tenant name."},
+    {"name": "tenant_slug",     "type": ["null", "string"], "default": null, "doc": "Tenant slug."},
+    {"name": "cable_peer_device",    "type": ["null", "string"], "default": null, "doc": "Far-end device."},
+    {"name": "cable_peer_interface", "type": ["null", "string"], "default": null, "doc": "Far-end interface."},
+    {"name": "cable_status",         "type": ["null", "string"], "default": null, "doc": "Cable status."},
+    {"name": "cable_type",           "type": ["null", "string"], "default": null, "doc": "Cable type."},
+    {"name": "interface_type",       "type": ["null", "string"], "default": null, "doc": "NetBox interface type."},
+    {"name": "interface_enabled",    "type": ["null", "boolean"],"default": null, "doc": "Enabled in NetBox."},
+    {"name": "interface_mode",       "type": ["null", "string"], "default": null, "doc": "Interface mode."},
+    {"name": "interface_tags",       "type": {"type": "array", "items": "string"}, "default": [], "doc": "Interface tags."},
+    {"name": "custom_fields",        "type": ["null", "string"], "default": null, "doc": "Device custom fields as JSON."}
+  ]
+}

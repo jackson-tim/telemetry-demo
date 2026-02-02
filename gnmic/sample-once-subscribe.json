@@ -1,0 +1,1457 @@
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530054993382,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/admin-state": "enable"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530054993382,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/mtu": "1514"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530054993382,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ifindex": "1077952510"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530054993382,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/oper-state": "up"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530054993382,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/last-change": "2026-01-31T20:56:41.989Z"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530054993382,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/forwarding-mode": "store-and-forward"
+    }
+  }
+]
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/in-packets": "283"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/in-octets": "64115"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/in-unicast-packets": "277"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/in-broadcast-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/in-multicast-packets": "6"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/in-discarded-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/in-error-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/in-fcs-error-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/out-packets": "347"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/out-octets": "259950"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/out-mirror-octets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/out-unicast-packets": "327"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/out-broadcast-packets": "6"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/out-multicast-packets": "14"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/out-discarded-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/out-error-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/out-mirror-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/statistics/carrier-transitions": "1"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/traffic-rate/in-bps": "1373"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/traffic-rate/out-bps": "61"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/port-speed": "1G"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/hw-mac-address": "A2:54:72:72:FE:78"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/flow-control/receive": "false"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/hold-time/up": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/hold-time/down": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-mac-pause-frames": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-oversize-frames": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-undersize-frames": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-jabber-frames": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-fragment-frames": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-crc-error-frames": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/out-mac-pause-frames": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-64b-frames": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-65b-to-127b-frames": "196"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-128b-to-255b-frames": "49"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-256b-to-511b-frames": "13"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-512b-to-1023b-frames": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-1024b-to-1518b-frames": "11"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/in-1519b-or-longer-frames": "12"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/out-64b-frames": "7"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/out-65b-to-127b-frames": "131"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/out-128b-to-255b-frames": "28"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/out-256b-to-511b-frames": "7"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/out-512b-to-1023b-frames": "26"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/out-1024b-to-1518b-frames": "148"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/ethernet/statistics/out-1519b-or-longer-frames": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/admin-state": "enable"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ip-mtu": "1500"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/name": "mgmt0.0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ifindex": "1077936129"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/oper-state": "up"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/last-change": "2026-01-31T20:56:41.990Z"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/admin-state": "enable"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/allow-directed-broadcast": "false"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "address_ip-prefix": "172.17.0.2/16",
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/address/origin": "dhcp"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "address_ip-prefix": "172.17.0.2/16",
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/address/status": "preferred"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/unnumbered/admin-state": "disable"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055270342,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    }
+  }
+]
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055763178,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/arp/duplicate-address-detection": "true"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055763178,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/arp/timeout": "14400"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055763178,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/arp/learn-unsolicited": "false"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055763178,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/arp/proxy-arp": "false"
+    }
+  }
+]
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055866012,
+    "tags": {
+      "interface_name": "mgmt0",
+      "neighbor_ipv4-address": "172.17.0.1",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/arp/neighbor/link-layer-address": "AA:10:38:DA:8C:52"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055866012,
+    "tags": {
+      "interface_name": "mgmt0",
+      "neighbor_ipv4-address": "172.17.0.1",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/arp/neighbor/origin": "dynamic"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055866012,
+    "tags": {
+      "interface_name": "mgmt0",
+      "neighbor_ipv4-address": "172.17.0.1",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/arp/neighbor/expiration-time": "2026-02-01T00:57:56.179Z"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530055866012,
+    "tags": {
+      "interface_name": "mgmt0",
+      "neighbor_ipv4-address": "172.17.0.1",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv4/arp/neighbor/datapath-programming/status": "success"
+    }
+  }
+]
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530056488099,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/admin-state": "enable"
+    }
+  }
+]
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530056661475,
+    "tags": {
+      "address_ip-prefix": "fe80::a054:72ff:fe72:fe78/64",
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/address/type": "link-local-unicast"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530056661475,
+    "tags": {
+      "address_ip-prefix": "fe80::a054:72ff:fe72:fe78/64",
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/address/origin": "link-layer"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530056661475,
+    "tags": {
+      "address_ip-prefix": "fe80::a054:72ff:fe72:fe78/64",
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/address/status": "preferred"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530056661475,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    }
+  }
+]
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057061643,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/duplicate-address-detection": "true"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057061643,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/reachable-time": "30"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057061643,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/stale-time": "14400"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057061643,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/learn-unsolicited": "none"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057061643,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/proxy-nd": "false"
+    }
+  }
+]
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057176894,
+    "tags": {
+      "interface_name": "mgmt0",
+      "neighbor_ipv6-address": "fe80::104a:85ff:fe5c:ac8",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/neighbor/link-layer-address": "12:4A:85:5C:0A:C8"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057176894,
+    "tags": {
+      "interface_name": "mgmt0",
+      "neighbor_ipv6-address": "fe80::104a:85ff:fe5c:ac8",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/neighbor/origin": "dynamic"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057176894,
+    "tags": {
+      "interface_name": "mgmt0",
+      "neighbor_ipv6-address": "fe80::104a:85ff:fe5c:ac8",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/neighbor/is-router": "false"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057176894,
+    "tags": {
+      "interface_name": "mgmt0",
+      "neighbor_ipv6-address": "fe80::104a:85ff:fe5c:ac8",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/neighbor/current-state": "stale"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057176894,
+    "tags": {
+      "interface_name": "mgmt0",
+      "neighbor_ipv6-address": "fe80::104a:85ff:fe5c:ac8",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/neighbor/next-state-time": "2026-02-01T00:56:44.146Z"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057176894,
+    "tags": {
+      "interface_name": "mgmt0",
+      "neighbor_ipv6-address": "fe80::104a:85ff:fe5c:ac8",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/neighbor/datapath-programming/status": "success"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057176894,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/limit/log-only": "false"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057176894,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/neighbor-discovery/limit/warning-threshold-pct": "90"
+    }
+  }
+]
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057731897,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057731897,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/router-advertisement/router-role/admin-state": "disable"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057731897,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/router-advertisement/router-role/current-hop-limit": "64"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057731897,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/router-advertisement/router-role/managed-configuration-flag": "false"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057731897,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/router-advertisement/router-role/other-configuration-flag": "false"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057731897,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/router-advertisement/router-role/max-advertisement-interval": "600"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057731897,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/router-advertisement/router-role/min-advertisement-interval": "200"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057731897,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/router-advertisement/router-role/reachable-time": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057731897,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/router-advertisement/router-role/retransmit-time": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057731897,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/ipv6/router-advertisement/router-role/router-lifetime": "1800"
+    }
+  }
+]
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/in-packets": "281"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/in-octets": "64031"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/in-discarded-packets": "281"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/in-forwarded-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/in-forwarded-octets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/in-matched-ra-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/out-forwarded-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/out-forwarded-octets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/out-originated-packets": "340"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/out-originated-octets": "258142"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/out-discarded-packets": "0"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/out-packets": "340"
+    }
+  },
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530057805772,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subinterface_index": "0",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/subinterface/statistics/out-octets": "258142"
+    }
+  }
+]
+[
+  {
+    "name": "default-1769893529",
+    "timestamp": 1769893530059467948,
+    "tags": {
+      "interface_name": "mgmt0",
+      "source": "localhost:57400",
+      "subscription-name": "default-1769893529"
+    },
+    "values": {
+      "/interface/sflow/admin-state": "disable"
+    }
+  }
+]
