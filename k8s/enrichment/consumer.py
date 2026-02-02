@@ -208,13 +208,12 @@ def _bootstrap_and_watch_netbox(sr_client: SchemaRegistryClient) -> None:
     """
     log.info("CDC: Starting netbox-changes consumer (bootstrap + watch)")
 
-    # Use a separate consumer group for the CDC feed — we always read from beginning
+    # No consumer group — always replay from offset 0 to rebuild the in-memory cache.
+    # Using assign() with explicit offsets instead of subscribe() so we don't depend
+    # on committed offsets for a cache that only lives in memory.
     cdc_conf = {
         "bootstrap.servers": KAFKA_BOOTSTRAP,
-        "group.id": f"{CONSUMER_GROUP}-cdc",
-        "auto.offset.reset": "earliest",
-        "enable.auto.commit": True,
-        "auto.commit.interval.ms": 5000,
+        "enable.auto.commit": False,
     }
     cdc_consumer = Consumer(cdc_conf)
 
@@ -222,8 +221,19 @@ def _bootstrap_and_watch_netbox(sr_client: SchemaRegistryClient) -> None:
     # Use Schema Registry auto-detection (schema ID embedded in message).
     netbox_deser = AvroDeserializer(sr_client)
 
-    cdc_consumer.subscribe([NETBOX_TOPIC])
-    log.info("CDC: Subscribed to %s", NETBOX_TOPIC)
+    # Get partition list and assign from offset 0
+    cluster_meta = cdc_consumer.list_topics(NETBOX_TOPIC, timeout=10)
+    topic_meta = cluster_meta.topics.get(NETBOX_TOPIC)
+    if not topic_meta or not topic_meta.partitions:
+        log.error("CDC: Topic %s not found or has no partitions", NETBOX_TOPIC)
+        return
+
+    partitions = [
+        TopicPartition(NETBOX_TOPIC, p, OFFSET_BEGINNING)
+        for p in topic_meta.partitions
+    ]
+    cdc_consumer.assign(partitions)
+    log.info("CDC: Assigned %d partition(s) of %s from offset 0", len(partitions), NETBOX_TOPIC)
 
     bootstrap_done = False
     bootstrap_count = 0
