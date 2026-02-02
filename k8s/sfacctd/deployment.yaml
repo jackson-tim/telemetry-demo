@@ -24,7 +24,7 @@ data:
                tos, in_iface, out_iface, \
                src_as, dst_as, peer_src_as, peer_dst_as, \
                peer_src_ip, peer_dst_ip, \
-               src_std_comm, dst_std_comm, \
+               std_comm, src_std_comm, as_path, src_as_path, \
                sampling_rate, tag, tag2
 
     ! --- BGP daemon ---
@@ -33,8 +33,8 @@ data:
     bgp_daemon_port: 179
     bgp_daemon_as: 65000
     bgp_daemon_max_peers: 50
-    bgp_aspath_radius: 0
-    bgp_stdcomm_pattern_to_asn: 0
+    ! bgp_aspath_radius must be >= 1
+    ! bgp_stdcomm_pattern_to_asn: 0
 
     nfacctd_as: bgp
     nfacctd_net: bgp
@@ -169,6 +169,7 @@ metadata:
     kube-vip.io/loadbalancerIPs: "10.42.201.22"
 spec:
   type: LoadBalancer
+  loadBalancerIP: 10.42.201.22
   ports:
     - name: sflow
       port: 6343
