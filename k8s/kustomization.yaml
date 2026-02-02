@@ -7,3 +7,4 @@ resources:
   - kafka-external-lb.yaml
   - schema-registry.yaml
   - schema-registry-lb.yaml
+  - sfacctd/deployment.yaml

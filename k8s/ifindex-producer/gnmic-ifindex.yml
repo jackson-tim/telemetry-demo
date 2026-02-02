@@ -1,0 +1,38 @@
+# gnmic config for ifindex → interface_name mapping
+# Subscribes to interface state and produces to a compacted Kafka topic.
+# The flow enrichment consumer reads this to resolve ifindex integers
+# from sFlow/IPFIX to interface names for NetBox lookup.
+
+targets:
+  nokia-srlinux:
+    address: "${GNMIC_TARGET:-localhost:57400}"
+    username: "${GNMIC_USER:-admin}"
+    password: "${GNMIC_PASS:-NokiaSrl1!}"
+    insecure: true
+    timeout: 10s
+
+subscriptions:
+  ifindex-map:
+    paths:
+      # Get ifindex and interface name mapping
+      - /interface[name=*]/state/ifindex
+      - /interface[name=*]/state/admin-state
+      - /interface[name=*]/state/oper-state
+      - /interface[name=*]/subinterface[index=*]/state/ifindex
+    mode: stream
+    stream-mode: on-change
+    # Also do a full sync on startup
+    suppress-redundant: false
+
+outputs:
+  kafka-ifindex:
+    type: kafka
+    address: "${KAFKA_BROKER:-kafka:9092}"
+    topic: ifindex-map
+    # Use interface name as key for compaction
+    # This means the topic retains latest state per interface
+    format: event
+    num-workers: 1
+    debug: false
+    enable-metrics: false
+    override-timestamps: true

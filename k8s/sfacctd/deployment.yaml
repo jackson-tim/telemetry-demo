@@ -1,0 +1,182 @@
+##
+## sfacctd (pmacct) — sFlow collector with BGP daemon + Kafka output
+## Receives sFlow on UDP 6343, runs BGP daemon on TCP 179,
+## enriches flows with AS path/community info, outputs JSON to Kafka.
+##
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sfacctd-config
+  namespace: telemetry
+data:
+  sfacctd.conf: |
+    !
+    ! sfacctd.conf — sFlow collector with BGP daemon + Kafka output
+    !
+
+    ! --- Core sFlow settings ---
+    sfacctd_port: 6343
+    sfacctd_ip: 0.0.0.0
+
+    ! --- Aggregation primitives ---
+    aggregate: src_host, dst_host, src_port, dst_port, proto, \
+               tos, in_iface, out_iface, \
+               src_as, dst_as, peer_src_as, peer_dst_as, \
+               peer_src_ip, peer_dst_ip, \
+               src_std_comm, dst_std_comm, \
+               sampling_rate, tag, tag2
+
+    ! --- BGP daemon ---
+    bgp_daemon: true
+    bgp_daemon_ip: 0.0.0.0
+    bgp_daemon_port: 179
+    bgp_daemon_as: 65000
+    bgp_daemon_max_peers: 50
+    bgp_aspath_radius: 0
+    bgp_stdcomm_pattern_to_asn: 0
+
+    nfacctd_as: bgp
+    nfacctd_net: bgp
+
+    ! --- Kafka plugin ---
+    plugins: kafka[sflow]
+
+    kafka_broker_host[sflow]: kafka-headless.telemetry.svc.cluster.local:9092
+    kafka_topic[sflow]: flow-telemetry-raw
+    kafka_output[sflow]: json
+    kafka_refresh_time[sflow]: 60
+
+    ! --- Sampling ---
+    sfacctd_renormalize: true
+
+    ! --- Pre-tagging ---
+    pre_tag_map: /etc/pmacct/pretag.map
+
+    ! --- Misc ---
+    timestamps_secs: true
+    writer_id_string: sfacctd-%H
+
+  pretag.map: |
+    !
+    ! pretag.map — Tag sFlow agents by router identity
+    !
+    ! Tag scheme:
+    !   1xxxx = spine switches
+    !   2xxxx = leaf switches
+    !   3xxxx = border/edge routers
+    !
+
+    ! Spine switches
+    set_tag=10001 ip=10.0.0.1
+    set_tag=10002 ip=10.0.0.2
+    set_tag=10003 ip=10.0.0.3
+    set_tag=10004 ip=10.0.0.4
+
+    ! Leaf switches
+    set_tag=20001 ip=10.0.1.1
+    set_tag=20002 ip=10.0.1.2
+    set_tag=20003 ip=10.0.1.3
+    set_tag=20004 ip=10.0.1.4
+
+    ! Border routers
+    set_tag=30001 ip=10.0.2.1
+    set_tag=30002 ip=10.0.2.2
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sfacctd
+  namespace: telemetry
+  labels:
+    app: sfacctd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sfacctd
+  template:
+    metadata:
+      labels:
+        app: sfacctd
+    spec:
+      containers:
+        - name: sfacctd
+          image: ghcr.io/beans-assist/sfacctd:latest
+          imagePullPolicy: Always
+          command:
+            - /usr/local/sbin/sfacctd
+            - "-f"
+            - /etc/pmacct/sfacctd.conf
+            - "-d"    # daemonize=false (foreground for container)
+          ports:
+            - name: sflow
+              containerPort: 6343
+              protocol: UDP
+            - name: bgp
+              containerPort: 179
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /etc/pmacct/sfacctd.conf
+              subPath: sfacctd.conf
+            - name: config
+              mountPath: /etc/pmacct/pretag.map
+              subPath: pretag.map
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: config
+          configMap:
+            name: sfacctd-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sfacctd
+  namespace: telemetry
+  labels:
+    app: sfacctd
+spec:
+  type: ClusterIP
+  ports:
+    - name: sflow
+      port: 6343
+      targetPort: 6343
+      protocol: UDP
+    - name: bgp
+      port: 179
+      targetPort: 179
+      protocol: TCP
+  selector:
+    app: sfacctd
+---
+# LoadBalancer for sFlow ingress from network devices
+apiVersion: v1
+kind: Service
+metadata:
+  name: sfacctd-external
+  namespace: telemetry
+  labels:
+    app: sfacctd
+  annotations:
+    kube-vip.io/loadbalancerIPs: "10.42.201.22"
+spec:
+  type: LoadBalancer
+  ports:
+    - name: sflow
+      port: 6343
+      targetPort: 6343
+      protocol: UDP
+    - name: bgp
+      port: 179
+      targetPort: 179
+      protocol: TCP
+  selector:
+    app: sfacctd
