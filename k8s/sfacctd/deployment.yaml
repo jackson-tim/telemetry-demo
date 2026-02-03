@@ -56,9 +56,8 @@ data:
 
     ! --- Misc ---
     timestamps_secs: true
-    writer_id_string: sfacctd-%H
+    writer_id_string: sfacctd
     debug: true
-    syslog: /dev/stderr
 
   pretag.map: |
     !
