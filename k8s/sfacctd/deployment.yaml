@@ -20,12 +20,7 @@ data:
     sfacctd_ip: 0.0.0.0
 
     ! --- Aggregation primitives ---
-    aggregate: src_host, dst_host, src_port, dst_port, proto, \
-               tos, in_iface, out_iface, \
-               src_as, dst_as, peer_src_as, peer_dst_as, \
-               peer_src_ip, peer_dst_ip, \
-               std_comm, src_std_comm, as_path, src_as_path, \
-               sampling_rate, tag, tag2
+    aggregate: src_host, dst_host, src_port, dst_port, proto, tos, in_iface, out_iface, src_as, dst_as, peer_src_as, peer_dst_as, peer_src_ip, peer_dst_ip, std_comm, src_std_comm, as_path, src_as_path, sampling_rate, tag, tag2
 
     ! --- BGP daemon ---
     bgp_daemon: true
