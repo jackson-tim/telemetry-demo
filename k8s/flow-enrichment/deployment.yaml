@@ -1,0 +1,54 @@
+##
+## Flow Enrichment Consumer
+## Reads flow-telemetry-raw (sfacctd output), enriches with:
+##   - ifindex → interface name (gNMI-sourced)
+##   - IP → device identity (NetBox CDC)
+##   - BGP community → interconnection type
+## Produces to flow-telemetry-enriched topic.
+##
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flow-enrichment
+  namespace: telemetry
+  labels:
+    app: flow-enrichment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flow-enrichment
+  template:
+    metadata:
+      labels:
+        app: flow-enrichment
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: flow-enrichment
+          image: ghcr.io/beans-assist/flow-enrichment:latest
+          imagePullPolicy: Always
+          env:
+            - name: KAFKA_BOOTSTRAP
+              value: "kafka-headless:9092"
+            - name: CONSUMER_GROUP
+              value: "flow-enrichment"
+            - name: RAW_TOPIC
+              value: "flow-telemetry-raw"
+            - name: ENRICHED_TOPIC
+              value: "flow-telemetry-enriched"
+            - name: IFINDEX_TOPIC
+              value: "ifindex-map"
+            - name: NETBOX_TOPIC
+              value: "netbox-changes"
+            - name: LOG_LEVEL
+              value: "INFO"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi

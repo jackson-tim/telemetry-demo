@@ -134,12 +134,14 @@ class IfIndexCache:
 class NetBoxCache:
     """
     Maps device_name → device metadata, and (device_name, interface_name) → interface metadata.
+    Also maintains an IP → device_name reverse index for resolving sFlow agent IPs.
     Populated from netbox-changes compacted topic.
     """
 
     def __init__(self):
         self._devices: dict[str, dict] = {}
         self._interfaces: dict[str, dict[str, dict]] = {}
+        self._ip_to_device: dict[str, str] = {}  # IP → device_name reverse index
         self._lock = threading.Lock()
 
     def update_from_event(self, event: dict) -> None:
@@ -149,27 +151,63 @@ class NetBoxCache:
 
         with self._lock:
             if event.get("event_type") == "deleted":
+                # Remove IP index entries for this device
+                old_dev = self._devices.get(device_name, {})
+                old_ip = old_dev.get("primary_ip")
+                if old_ip:
+                    self._ip_to_device.pop(old_ip, None)
+                    # Also remove bare IP (without /prefix)
+                    self._ip_to_device.pop(old_ip.split("/")[0], None)
                 self._devices.pop(device_name, None)
                 self._interfaces.pop(device_name, None)
                 return
 
             self._devices[device_name] = {
                 "site_name": event.get("site_name"),
+                "site_slug": event.get("site_slug"),
                 "region": event.get("region"),
                 "device_role": event.get("device_role"),
                 "device_type": event.get("device_type"),
                 "tenant_name": event.get("tenant_name"),
+                "primary_ip": event.get("primary_ip"),
+                "device_tags": event.get("device_tags", []),
             }
+
+            # Build IP → device_name reverse index
+            primary_ip = event.get("primary_ip")
+            if primary_ip:
+                # Store both with and without CIDR prefix
+                self._ip_to_device[primary_ip] = device_name
+                bare_ip = primary_ip.split("/")[0]
+                self._ip_to_device[bare_ip] = device_name
+
+            # Also index any management IPs from interfaces
+            for iface in event.get("interfaces", []):
+                for ip_info in iface.get("ip_addresses", []):
+                    ip_addr = ip_info if isinstance(ip_info, str) else ip_info.get("address", "")
+                    if ip_addr:
+                        self._ip_to_device[ip_addr] = device_name
+                        self._ip_to_device[ip_addr.split("/")[0]] = device_name
 
             iface_map = {}
             for iface in event.get("interfaces", []):
                 iface_map[iface["name"]] = {
                     "interface_type": iface.get("type"),
+                    "interface_enabled": iface.get("enabled"),
                     "cable_peer_device": iface.get("cable_peer_device"),
                     "cable_peer_interface": iface.get("cable_peer_interface"),
+                    "cable_status": iface.get("cable_status"),
                     "interface_tags": iface.get("tags", []),
                 }
             self._interfaces[device_name] = iface_map
+
+    def get_device_by_ip(self, ip: str) -> tuple[str | None, dict | None]:
+        """Resolve an IP to (device_name, device_meta). Returns (None, None) if not found."""
+        with self._lock:
+            device_name = self._ip_to_device.get(ip)
+            if device_name:
+                return device_name, self._devices.get(device_name)
+            return None, None
 
     def get_device(self, device_name: str) -> dict | None:
         with self._lock:
@@ -187,6 +225,10 @@ class NetBoxCache:
     @property
     def interface_count(self) -> int:
         return sum(len(v) for v in self._interfaces.values())
+
+    @property
+    def ip_index_count(self) -> int:
+        return len(self._ip_to_device)
 
 
 # ---------------------------------------------------------------------------
@@ -348,15 +390,29 @@ def classify_communities(communities_str: str) -> list[str]:
 def enrich_flow(raw: dict) -> dict:
     """
     Enrich a raw sfacctd flow record with:
-    - Interface names (from ifindex cache)
-    - NetBox metadata (from netbox-changes cache)
-    - Interconnection type (from BGP communities)
+    - Router identity (IP → device_name via NetBox)
+    - Interface names (ifindex → name via gNMI-sourced cache)
+    - NetBox device/interface metadata (site, role, cable peer, etc.)
+    - Interconnection type (BGP communities → classification)
+    - AS path context
     """
     enriched = dict(raw)
     enriched["enrichment_ts"] = int(time.time() * 1000)
     enriched["enriched"] = False
 
     router_ip = raw.get("peer_src_ip", "") or raw.get("agent_id", "")
+
+    # --- Resolve router IP → device identity via NetBox ---
+    device_name, device_meta = _netbox_cache.get_device_by_ip(router_ip)
+    enriched["device_name"] = device_name
+    if device_meta:
+        enriched["site_name"] = device_meta.get("site_name")
+        enriched["site_slug"] = device_meta.get("site_slug")
+        enriched["region"] = device_meta.get("region")
+        enriched["device_role"] = device_meta.get("device_role")
+        enriched["device_type"] = device_meta.get("device_type")
+        enriched["tenant_name"] = device_meta.get("tenant_name")
+        enriched["enriched"] = True
 
     # --- Resolve ifindex → interface name ---
     in_ifindex = raw.get("iface_in", 0) or raw.get("in_iface", 0)
@@ -368,20 +424,26 @@ def enrich_flow(raw: dict) -> dict:
     enriched["in_interface_name"] = in_iface_name
     enriched["out_interface_name"] = out_iface_name
 
-    # --- NetBox enrichment (device + interface metadata) ---
-    # We need to map router_ip → device_name first.
-    # For now, use router_ip as device lookup (netbox-bridge indexes by name,
-    # so we'd need a reverse IP→name map. TODO: add to netbox-bridge).
-    # This enriches interface-level data if we can resolve the device.
+    # --- NetBox interface metadata (cable peer, tags, etc.) ---
+    if device_name and in_iface_name:
+        in_iface_meta = _netbox_cache.get_interface(device_name, in_iface_name)
+        if in_iface_meta:
+            enriched["in_cable_peer_device"] = in_iface_meta.get("cable_peer_device")
+            enriched["in_cable_peer_interface"] = in_iface_meta.get("cable_peer_interface")
+            enriched["in_interface_type"] = in_iface_meta.get("interface_type")
+            enriched["in_interface_tags"] = in_iface_meta.get("interface_tags", [])
 
-    if in_iface_name:
-        # Try device lookup — iterate is not great but cache is small
-        # A proper implementation would have an IP→device index
-        pass
+    if device_name and out_iface_name:
+        out_iface_meta = _netbox_cache.get_interface(device_name, out_iface_name)
+        if out_iface_meta:
+            enriched["out_cable_peer_device"] = out_iface_meta.get("cable_peer_device")
+            enriched["out_cable_peer_interface"] = out_iface_meta.get("cable_peer_interface")
+            enriched["out_interface_type"] = out_iface_meta.get("interface_type")
+            enriched["out_interface_tags"] = out_iface_meta.get("interface_tags", [])
 
-    # --- BGP community classification ---
-    src_comms = raw.get("src_std_comm", "") or raw.get("comms_src", "")
-    dst_comms = raw.get("dst_std_comm", "") or raw.get("comms_dst", "")
+    # --- BGP community → interconnection type classification ---
+    src_comms = raw.get("comms_src", "") or raw.get("src_std_comm", "")
+    dst_comms = raw.get("comms", "") or raw.get("std_comm", "")
 
     src_types = classify_communities(src_comms)
     dst_types = classify_communities(dst_comms)
@@ -389,7 +451,7 @@ def enrich_flow(raw: dict) -> dict:
     enriched["src_interconnection_types"] = src_types
     enriched["dst_interconnection_types"] = dst_types
 
-    # Convenience: primary interconnection type (first match)
+    # Primary interconnection type (first match, prefer dst direction)
     if dst_types:
         enriched["interconnection_type"] = dst_types[0]
     elif src_types:
@@ -397,7 +459,18 @@ def enrich_flow(raw: dict) -> dict:
     else:
         enriched["interconnection_type"] = "unknown"
 
-    if in_iface_name or out_iface_name or src_types or dst_types:
+    # --- AS path context ---
+    as_path = raw.get("as_path", "")
+    src_as_path = raw.get("src_as_path", "")
+    if as_path:
+        hops = [h for h in as_path.split() if h.isdigit()]
+        enriched["as_path_length"] = len(hops)
+        enriched["origin_as"] = int(hops[-1]) if hops else None
+    else:
+        enriched["as_path_length"] = 0
+        enriched["origin_as"] = None
+
+    if in_iface_name or out_iface_name or device_name or src_types or dst_types or as_path:
         enriched["enriched"] = True
 
     return enriched
@@ -426,8 +499,9 @@ def main():
         if _ifindex_cache.size > 0 or _netbox_cache.device_count > 0 or _shutdown.is_set():
             break
         time.sleep(1)
-    log.info("Caches ready — ifindex=%d netbox_devices=%d netbox_interfaces=%d",
-             _ifindex_cache.size, _netbox_cache.device_count, _netbox_cache.interface_count)
+    log.info("Caches ready — ifindex=%d netbox_devices=%d netbox_interfaces=%d ip_index=%d",
+             _ifindex_cache.size, _netbox_cache.device_count, _netbox_cache.interface_count,
+             _netbox_cache.ip_index_count)
 
     # Main consumer + producer
     consumer = Consumer({
@@ -485,8 +559,11 @@ def main():
 
             now = time.monotonic()
             if now - last_log >= 60:
-                log.info("Stats — flows=%d enriched=%d ifindex_cache=%d netbox_devices=%d",
-                         msg_count, enriched_count, _ifindex_cache.size, _netbox_cache.device_count)
+                enrich_pct = (enriched_count / msg_count * 100) if msg_count else 0
+                log.info("Stats — flows=%d enriched=%d (%.1f%%) ifindex=%d devices=%d ips=%d",
+                         msg_count, enriched_count, enrich_pct,
+                         _ifindex_cache.size, _netbox_cache.device_count,
+                         _netbox_cache.ip_index_count)
                 last_log = now
 
     except KafkaException as e:
